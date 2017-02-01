@@ -4,7 +4,8 @@
 3. Add *`require ‘cukehub’`* to your features/support/env.rb file
 4. Add *`@cukehub_token = “< token >”`* to your features/support/env.rb Before Hook.
 5. Run your cukes *`$ cucumber features`*
-6. Visit http://cukehub.com/apps and Analyze  Results!
+6. Visit http://cukehub.com/apps and Analyze Cuke Results.
+7. Inivte your team and friends to CukeHub!
 
 
 

@@ -1,12 +1,10 @@
-require 'rubygems'
-
 namespace :cuke do
-  desc "cucunber -t <@tags> against qa.cloudchecker.com"
+  desc "cucunber -t <@tags>"
   task :hub, [:tag] do |t, args|
     file = "#{args[:tag]}".gsub(/@/, '')
     Bundler.with_clean_env do
     console_output = ""
-      IO.popen("thor set:chrome_ci && cucumber -t #{args[:tag]} -f rerun --out #{file}.txt", 'r+') do |pipe|
+      IO.popen("cucumber -t #{args[:tag]} -f rerun --out #{file}.txt", 'r+') do |pipe|
         puts console_output = pipe.read
         pipe.close_write
       end

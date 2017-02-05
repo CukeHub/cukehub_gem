@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'cukehub'
-  s.version     = '0.7.6'
-  s.date        = '2017-02-01'
+  s.version     = '0.8.5'
+  s.date        = '2017-02-05'
   s.summary     = "CukeHub!"
   s.description = "Capture and Analyze your Cucumber Test Results at CukeHub."
   s.authors     = ["Rich Downie"]
@@ -11,4 +11,5 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
   s.add_dependency "httparty", '~> 0'
   s.add_dependency "os", '~> 0'
+  s.add_dependency "rake", '~> 0'
 end

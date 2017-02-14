@@ -14,6 +14,8 @@ Before do
 end
 
 After do |scenario|
+  ignored_lines = ["Before hook", "After hook", "AfterStep hook"]
+  @steps = scenario.test_steps.map{|step| step.name if !ignored_lines.include?(step.name) }.compact.join("\n")
   IO.popen("git symbolic-ref --short HEAD") {|pipe| puts @git_branch = pipe.read }
   IO.popen("git rev-parse --verify HEAD") {|pipe| puts @git_sha = pipe.read }
   params = {
@@ -26,6 +28,7 @@ After do |scenario|
     os: os,
     runtime: (Time.now - @start),
     domain: @domain,
+    steps: @steps,
     branch: @git_branch.chomp,
     sha: @git_sha.chomp
   }

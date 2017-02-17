@@ -16,8 +16,8 @@ end
 After do |scenario|
   ignored_lines = ["Before hook", "After hook", "AfterStep hook"]
   @steps = scenario.test_steps.map{|step| step.name if !ignored_lines.include?(step.name) }.compact.join("\n")
-  IO.popen("git symbolic-ref --short HEAD") {|pipe| puts @git_branch = pipe.read }
-  IO.popen("git rev-parse --verify HEAD") {|pipe| puts @git_sha = pipe.read }
+  IO.popen("git symbolic-ref --short HEAD") {|pipe| @git_branch = pipe.read }
+  IO.popen("git rev-parse --verify HEAD") {|pipe| @git_sha = pipe.read }
   params = {
     api_key: @cukehub_api_key,
     name:   scenario.name,
@@ -33,7 +33,7 @@ After do |scenario|
     sha: @git_sha.chomp
   }
   params[:browser] = @browser.browser.upcase unless @browser.nil?
-  params[:exception]=scenario.exception.message unless scenario.passed?
+  params[:exception]=scenario.exception.backtrace.compact.join("\n") unless scenario.passed?
 
   HTTParty.post("https://cukehub.com/api/v1/results", body: params)
 end   

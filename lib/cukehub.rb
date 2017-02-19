@@ -35,5 +35,5 @@ After do |scenario|
   params[:browser] = @browser.browser.upcase unless @browser.nil?
   params[:exception]=scenario.exception.backtrace.compact.join("\n") unless scenario.passed?
 
-  HTTParty.post("https://cukehub.com/api/v1/results", body: params)
+  HTTParty.post("https://cukehub.com/api/v1/results", body: params, :verify => false)
 end   

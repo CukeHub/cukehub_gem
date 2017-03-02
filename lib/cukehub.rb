@@ -10,7 +10,7 @@ elsif OS.doze?
 end
 
 Before do
-    @start = Time.now
+  @start = Time.now
 end
 
 After do |scenario|
@@ -18,8 +18,8 @@ After do |scenario|
   @steps = scenario.test_steps.map{|step| step.name if !ignored_lines.include?(step.name) }.compact.join("\n")
   IO.popen("git symbolic-ref --short HEAD") {|pipe| @git_branch = pipe.read }
   IO.popen("git rev-parse --verify HEAD") {|pipe| @git_sha = pipe.read }
+  headers = { "Authorization" => "Token token=\"#{@cukehub_api_key}\""}
   params = {
-    api_key: @cukehub_api_key,
     name:   scenario.name,
     location: scenario.location,
     tag: scenario.source_tag_names,
@@ -35,5 +35,5 @@ After do |scenario|
   params[:browser] = @browser.browser.upcase unless @browser.nil?
   params[:exception]=scenario.exception.backtrace.compact.join("\n") unless scenario.passed?
 
-  HTTParty.post("https://cukehub.com/api/v1/results", body: params, :verify => false)
-end   
+  HTTParty.post("https://cukehub.com/api/v1/results", headers: headers, body: params, verify: false)
+end

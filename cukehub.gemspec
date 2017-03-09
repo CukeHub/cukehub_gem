@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'cukehub'
-  s.version     = '0.9.4'
+  s.version     = '0.9.4.1'
   s.date        = '2017-03-02'
   s.summary     = "CukeHub!"
   s.description = "Capture and Analyze your Cucumber Test Results at CukeHub."

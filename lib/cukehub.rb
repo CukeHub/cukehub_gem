@@ -10,10 +10,11 @@ elsif OS.doze?
 end
 
 Before do
-  @start = Time.now
+  @start = Time.now.utc
 end
 
 After do |scenario|
+  finished = Time.now.utc
   ignored_lines = ["Before hook", "After hook", "AfterStep hook"]
   @steps = scenario.test_steps.map{|step| step.name if !ignored_lines.include?(step.name) }.compact.join("\n")
   IO.popen("git symbolic-ref --short HEAD") {|pipe| @git_branch = pipe.read }
@@ -26,7 +27,8 @@ After do |scenario|
     status: scenario.status.upcase,
     machine: Socket.gethostname,
     os: os,
-    runtime: (Time.now - @start),
+    run_completed_at: finished,
+    runtime: (finished - @start),
     domain: @domain,
     steps: @steps,
     branch: @git_branch.chomp,

@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
   s.name        = 'cukehub'
-  s.version     = '0.9.4.2'
-  s.date        = '2017-03-08'
+  s.version     = '0.9.5'
+  s.date        = '2017-10-09'
   s.summary     = "CukeHub!"
-  s.description = "Store and Share your Cucumber Test Results at CukeHub."
+  s.description = "Cucumber Test Management"
   s.authors     = ["Rich Downie"]
   s.email       = 'rich@cukehub.com'
   s.files       = ["lib/cukehub.rb"]

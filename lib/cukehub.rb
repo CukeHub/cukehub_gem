@@ -24,7 +24,7 @@ After do |scenario|
     name:   scenario.name,
     location: scenario.location,
     tag: scenario.source_tag_names,
-    status: scenario.status.upcase,
+    status: scenario.status,
     machine: Socket.gethostname,
     os: os,
     run_completed_at: finished,
@@ -34,7 +34,7 @@ After do |scenario|
     branch: @git_branch.chomp,
     sha: @git_sha.chomp
   }
-  params[:browser] = @browser.browser.upcase unless @browser.nil?
+  params[:browser] = @browser.browser unless @browser.nil?
   params[:exception]=scenario.exception.backtrace.compact.join("\n") unless scenario.passed?
 
   HTTParty.post("https://cukehub.com/api/v1/results", headers: headers, body: params, verify: false)

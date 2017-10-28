@@ -34,7 +34,15 @@ After do |scenario|
     branch: @git_branch.chomp,
     sha: @git_sha.chomp
   }
-  params[:browser] = @browser.browser unless @browser.nil?
+  if @browser.inspect =~ /Selenium/
+    params[:browser] = @browser.browser unless @browser.nil?
+  elsif @driver.inspect =~ /Selenium/
+    params[:browser] = @driver.browser unless @driver.nil?
+  elsif @browser.inspect =~ /Watir/
+    params[:browser] = @browser.name unless @browser.nil?
+  elsif @driver.inspect =~ /Watir/
+    params[:browser] = @driver.name unless @driver.nil?
+  end
   params[:exception]=scenario.exception.backtrace.compact.join("\n") unless scenario.passed?
 
   HTTParty.post("https://cukehub.com/api/v1/results", headers: headers, body: params, verify: false)
